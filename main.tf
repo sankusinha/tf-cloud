@@ -1,13 +1,21 @@
-provider "aws" {
-  region = "ap-southeast-1"
-  access_key = var.AWS_ACCESS_KEY
-  secret_key = var.AWS_SECRET_KEY
+# Terraform Settings Block
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      #version = "~> 3.21" # Optional but recommended in production
+    }
+  }
 }
 
-variable "AWS_ACCESS_KEY" {}
-variable AWS_SECRET_KEY {}
+# Provider Block
+provider "aws" {
+  profile = "default" # AWS Credentials Profile configured on your local desktop terminal  $HOME/.aws/credentials
+  region  = "us-east-1"
+}
 
-resource "aws_instance" "tf-cloud-ec2" {
-  ami = "ami-0cd31be676780afa7"
+# Resource Block
+resource "aws_instance" "ec2demo" {
+  ami           = "ami-0dc5785603ad4ff54" # Amazon Linux in us-east-1, update as per your region
   instance_type = "t2.micro"
 }
